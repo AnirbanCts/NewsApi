@@ -21,10 +21,14 @@ func NewsController(write http.ResponseWriter, readvalue *http.Request) {
 		fmt.Println("Error fetching news:", err)
 		return
 	}
-	//json.NewEncoder(write).Encode(news.TotalResults)
-	//json.NewEncoder(write).Encode(news.Status)
 	for _, article := range news.Articles {
-		json.NewEncoder(write).Encode("Title:    " + article.Title)
-		json.NewEncoder(write).Encode("Description:    " + article.Description)
+		jsonResponse, err := json.Marshal(models.ArticleResponse{Title: article.Title, Description: article.Description})
+		if err != nil {
+			http.Error(write, "Could not convert to JSON", 500)
+			return
+		} else {
+
+			write.Write(jsonResponse)
+		}
 	}
 }
