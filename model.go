@@ -19,3 +19,7 @@ type NewsResponse struct {
 	TotalResults int       `json:"totalResults"`
 	Articles     []Article `json:"articles"`
 }
+type ArticleResponse struct {
+	Title       string `json:"title"`
+	Description string `json:"description"`
+}
